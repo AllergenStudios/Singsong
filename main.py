@@ -1,8 +1,19 @@
 import time
 from rich import print
+from rich.console import Console
 import pyglet
 import yt_dlp
+import os
+import easygui
 
+
+if os.path.exists("settings.txt") == True:
+    pass
+else:
+    settings = open("settings.txt",'a')
+    console = Console()
+    logpath = console.input("[blue]Path to your current latest.log: [/blue]")
+    settings.write(logpath)
 
 window = pyglet.window.Window()
 
@@ -23,7 +34,9 @@ print("[bright_blue]Command list can be found on the Github.[/bright_blue]")
 
 while True:
 
-    logfile = open('C:\\Users\\coone\\AppData\\Roaming\\com.modrinth.theseus\\profiles\\Client Tweaks\\logs\\latest.log', "r")
+    settings = open("settings.txt", 'r')
+
+    logfile = open(settings.readlines()[0], "r")
     loglines = follow(logfile)
     for line in loglines:
         if 'startsong' in line:
